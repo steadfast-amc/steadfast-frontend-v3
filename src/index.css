@@ -1,0 +1,50 @@
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-zinc-800;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    font-feature-settings: "cv11", "ss01";
+    font-variant-ligatures: none;
+  }
+
+  /* Visible keyboard focus everywhere — accessibility floor, non-negotiable
+     even in a minimalist design. Teal ring, consistent with the accent's
+     single job of marking "this matters right now". */
+  :focus-visible {
+    outline: none;
+    @apply ring-2 ring-accent ring-offset-2 ring-offset-canvas rounded-md;
+  }
+
+  ::selection {
+    @apply bg-accent/30 text-zinc-50;
+  }
+
+  /* Thin, quiet scrollbars — consistent with the hairline-border aesthetic */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-zinc-800 rounded-full border-2 border-canvas;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-zinc-700;
+  }
+}
