@@ -56,6 +56,10 @@ export function ComplaintView() {
   if (error) return <ErrorState message={error} onRetry={reload} />;
   if (!complaint) return <div className="text-sm text-zinc-500">Complaint not found.</div>;
 
+  const quoteLineItems = Array.isArray(complaint.quote?.lineItems) ? complaint.quote.lineItems : [];
+  const quoteTotalAmount = Number(complaint.quote?.totalAmount ?? 0);
+  const formatAmount = (value: number | undefined) => Number(value ?? 0).toLocaleString("en-IN");
+
   return (
     <div className="max-w-2xl">
       <Link to="/client/complaints" className="mb-4 inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-200">
@@ -97,16 +101,16 @@ export function ComplaintView() {
           </CardHeader>
           <CardContent>
             <ul className="divide-y divide-zinc-900">
-              {complaint.quote.lineItems.map((li, i) => (
+              {quoteLineItems.map((li, i) => (
                 <li key={i} className="flex items-center justify-between py-2 text-sm">
                   <span className="text-zinc-300">{li.description} × {li.quantity}</span>
-                  <span className="font-medium text-zinc-100">₹{li.lineTotal.toLocaleString("en-IN")}</span>
+                  <span className="font-medium text-zinc-100">₹{formatAmount(li.lineTotal)}</span>
                 </li>
               ))}
             </ul>
             <div className="mt-2 flex items-center justify-between border-t border-zinc-800 pt-3 text-sm font-semibold">
               <span className="text-zinc-100">Total</span>
-              <span className="text-zinc-100">₹{complaint.quote.totalAmount.toLocaleString("en-IN")}</span>
+              <span className="text-zinc-100">₹{formatAmount(quoteTotalAmount)}</span>
             </div>
 
             {!complaint.quote.approvedAt && (
